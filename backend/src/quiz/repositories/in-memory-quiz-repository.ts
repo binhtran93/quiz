@@ -63,7 +63,6 @@ export default class InMemoryQuizRepository implements QuizRepository{
 
     getQuestions(quizId: string): Promise<Question[]> {
         const quiz = this.quizzes.find(quiz => (quizId === quiz.id));
-        console.log(quizId, this.quizzes)
         if (!quiz) {
             return Promise.resolve([]);
         }

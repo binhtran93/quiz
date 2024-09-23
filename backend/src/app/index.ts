@@ -13,6 +13,16 @@ import GetQuizzes from "../quiz/services/get-quizzes";
 import QuizRepository from "../quiz/repositories/quiz-repository";
 import InMemoryQuizRepository from "../quiz/repositories/in-memory-quiz-repository";
 import GetQuestions from "../quiz/services/get-questions";
+import {createClient} from "redis";
+import {createAdapter} from "@socket.io/redis-streams-adapter";
+
+// Config container
+const container = new Container();
+container.bind<UserRepository>(TYPES.UserRepository).to(InMemoryUserRepository);
+container.bind<QuizRepository>(TYPES.QuizRepository).to(InMemoryQuizRepository);
+container.bind(GetUsers).toSelf();
+container.bind(GetQuizzes).toSelf();
+container.bind(GetQuestions).toSelf();
 
 // Create express app
 const app = express();
@@ -27,19 +37,14 @@ app.use(cors(corsOptions));
 
 // Create socket io server
 const server = http.createServer(app);
+const redisClient = createClient({ url: "redis://redis:6379" }); // TODO move to env
+redisClient.connect();
 const io = new Server(server, {
     cors: {
         origin
-    }
+    },
+    adapter: createAdapter(redisClient)
 });
-
-// Binding
-const container = new Container();
-container.bind<UserRepository>(TYPES.UserRepository).to(InMemoryUserRepository);
-container.bind<QuizRepository>(TYPES.QuizRepository).to(InMemoryQuizRepository);
-container.bind(GetUsers).toSelf();
-container.bind(GetQuizzes).toSelf();
-container.bind(GetQuestions).toSelf();
 
 configRoutes(app, container);
 
@@ -49,4 +54,7 @@ server.listen(port, () => {
 
 io.on('connection', (socket) => {
     console.log('a user connected');
+    socket.on('join-quiz', (message) => {
+        console.log(message);
+    })
 });

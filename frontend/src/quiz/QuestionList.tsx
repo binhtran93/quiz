@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Question, Quiz} from "../types";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import {socket} from "../socket";
 
 type QuestionListProps = {
     username: string;
@@ -22,6 +23,11 @@ export default function QuestionList(props: QuestionListProps) {
 
         fetchQuestions();
     }, []);
+
+    useEffect(() => {
+        socket.emit('join-quiz', quiz.id);
+    }, []);
+
 
     return (
 
