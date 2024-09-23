@@ -1,12 +1,36 @@
-import React from 'react';
-import { io } from 'socket.io-client';
+import React, {useEffect} from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import {Container} from "react-bootstrap";
 import UserInput from "./JoinQuiz/UserInput";
 import QuizInput from "./JoinQuiz/QuizInput";
+import { socket } from './socket';
 
 function App() {
+    useEffect(() => {
+        function onConnect() {
+            console.log('Connected!');
+        }
+
+        function onDisconnect() {
+            console.log('disconnected!');
+        }
+
+        function onFooEvent(value: any) {
+            console.log(value);
+        }
+
+        socket.on('connect', onConnect);
+        socket.on('disconnect', onDisconnect);
+        socket.on('foo', onFooEvent);
+
+        return () => {
+            socket.off('connect', onConnect);
+            socket.off('disconnect', onDisconnect);
+            socket.off('foo', onFooEvent);
+        };
+    }, []);
+
   return (
       <Container className="mt-lg-5">
           <h2>Join a Quiz</h2>

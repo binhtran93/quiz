@@ -25,7 +25,11 @@ app.use(cors(corsOptions));
 
 // Create socket io server
 const server = http.createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+    cors: {
+        origin: "http://localhost:3000"
+    }
+});
 
 // Binding
 const container = new Container();
@@ -36,7 +40,7 @@ container.bind(GetQuizzes).toSelf();
 
 initRoutes(app, container);
 
-app.listen(port, () => {
+server.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });
 
