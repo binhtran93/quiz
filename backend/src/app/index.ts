@@ -1,4 +1,5 @@
 import express from 'express';
+const cors = require('cors');
 import {Container} from "inversify";
 import "reflect-metadata";
 import {TYPES} from "./injection";
@@ -12,6 +13,12 @@ import InMemoryQuizRepository from "../quiz/repositories/in-memory-quiz-reposito
 
 const app = express();
 const port = process.env.PORT || 5000;
+
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    optionsSuccessStatus: 200,
+}
+app.use(cors(corsOptions));
 
 const container = new Container();
 container.bind<UserRepository>(TYPES.UserRepository).to(InMemoryUserRepository);

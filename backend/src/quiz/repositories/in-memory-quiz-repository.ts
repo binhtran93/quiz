@@ -8,8 +8,8 @@ export default class InMemoryQuizRepository {
 
     constructor() {
         this.quizzes = [
-            {id: nanoid()},
-            {id: nanoid()},
+            {id: nanoid(), name: 'Quiz 1'},
+            {id: nanoid(), name: 'Quiz 2'},
         ]
     }
 

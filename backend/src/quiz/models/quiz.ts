@@ -1,3 +1,4 @@
 export interface Quiz {
-    id: string
+    id: string;
+    name: string;
 }
