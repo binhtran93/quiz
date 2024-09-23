@@ -12,7 +12,7 @@ import GetQuizzes from "../quiz/services/get-quizzes";
 import QuizRepository from "../quiz/repositories/quiz-repository";
 import InMemoryQuizRepository from "../quiz/repositories/in-memory-quiz-repository";
 import GetQuestions from "../quiz/services/get-questions";
-import {createClient} from "redis";
+import redisClient from "../redis/client";
 import {createAdapter} from "@socket.io/redis-streams-adapter";
 import SubmitAnswer from "../quiz/services/submit-answer";
 
@@ -40,8 +40,6 @@ app.use(cors(corsOptions));
 
 // Create socket io server
 const server = http.createServer(app);
-const redisClient = createClient({ url: "redis://redis:6379" }); // TODO move to env
-redisClient.connect();
 const io = new Server(server, {
     cors: {
         origin

@@ -1,5 +1,6 @@
 import {inject, injectable} from "inversify";
 import {TYPES} from "../../app/injection";
+import redisClient from '../../redis/client';
 import QuizRepository from "../repositories/quiz-repository";
 
 @injectable()
@@ -32,7 +33,7 @@ export default class SubmitAnswer {
              */
 
             // REDIS
-
+            await redisClient.zIncrBy(`leaderboard-${quizId}`, 1, `user:${userId}`);
         }
 
         return isCorrect
