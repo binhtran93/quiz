@@ -26,7 +26,7 @@ export default function QuestionList(props: QuestionListProps) {
     return (
 
         <div>
-            <h2 className="mb-4">{quiz.name}</h2>
+            <h2 className="mb-4">{quiz.name} ({username})</h2>
             {questions.map((question) => {
                 return (
                     <Form className="mb-4" key={question.id}>
