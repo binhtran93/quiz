@@ -1,6 +1,7 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Question, Quiz} from "../types";
 import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 
 type QuestionListProps = {
     username: string;
@@ -28,18 +29,24 @@ export default function QuestionList(props: QuestionListProps) {
             <h2 className="mb-4">{quiz.name}</h2>
             {questions.map((question) => {
                 return (
-                    <div className="mb-4" key={question.id}>
+                    <Form className="mb-4" key={question.id}>
                         <h4>{question.text}</h4>
-                        {question.options.map((option) => {
+                        {question.options.map((option, index) => {
                             return (
                                 <Form.Check
                                     key={option}
+                                    className="mb-1"
                                     type="radio"
                                     label={option}
+                                    value={index}
+                                    name="answer"
                                 />
                             )
                         })}
-                    </div>
+                        <Button className="mt-2" variant="primary" type="button" onClick={() => {}}>
+                            Submit
+                        </Button>
+                    </Form>
                 )
             })}
         </div>

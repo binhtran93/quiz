@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {Container} from "react-bootstrap";
 import JoinForm from "./join-quiz/JoinForm";
-import QuestionList from "./quiz/question-list";
-import {Question, Quiz} from "./types";
+import {Quiz} from "./types";
+import QuizSection from "./quiz/QuizSection";
 
 type State = 'lobby' | 'joined';
 
@@ -22,7 +22,7 @@ function App() {
             )}
 
             {state === 'joined' && quiz !== undefined && (
-                <QuestionList username={username} quiz={quiz} />
+                <QuizSection username={username} quiz={quiz} />
             )}
         </Container>
     );

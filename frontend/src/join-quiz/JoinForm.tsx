@@ -25,7 +25,7 @@ export default function JoinForm(props: JoinFormProps) {
                     <QuizInput onChange={quiz => setQuiz(quiz)} />
                 </Form.Group>
                 <Button variant="primary" type="button" onClick={joinQuiz}>
-                    Submit
+                    Join
                 </Button>
             </Form>
         </>
