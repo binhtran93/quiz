@@ -62,6 +62,10 @@ io.on('connection', (socket) => {
         const {userId, answerIndex, questionId, quizId} = params;
 
         const submitAnswer = container.resolve(SubmitAnswer);
-        await submitAnswer.execute(userId, quizId, questionId, answerIndex);
+        const isCorrect = await submitAnswer.execute(userId, quizId, questionId, answerIndex);
+        if (isCorrect) {
+            const leaderboard = await redisClient.zRangeWithScores(`leaderboard-${quizId}`, 0, 10, {REV: true});
+            io.to(quizId).emit('leaderboard-updated', leaderboard);
+        }
     });
 });

@@ -24,9 +24,4 @@ export default class QuizController {
 
         return res.json(questions);
     }
-
-    public async submitAnswer(userId: string, quizId: string, questionId: string, answerIndex: number): Promise<void> {
-        await this.submitAnswerServ.execute(userId, quizId, questionId, answerIndex);
-
-    }
 }

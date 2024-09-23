@@ -33,7 +33,8 @@ export default class SubmitAnswer {
              */
 
             // REDIS
-            await redisClient.zIncrBy(`leaderboard-${quizId}`, 1, `user:${userId}`);
+            const key = `leaderboard-${quizId}`;
+            await redisClient.zIncrBy(key, 1, `user:${userId}`);
         }
 
         return isCorrect
