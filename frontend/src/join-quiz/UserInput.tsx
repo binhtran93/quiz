@@ -33,7 +33,7 @@ export default function UserInput(props: UserInputProp) {
             <Form.Label>Select User</Form.Label>
                 <Form.Select aria-label="Default select example" onChange={selectUser}>
                     {users.map((user) => (
-                        <option value={user.username}>{user.username}</option>
+                        <option value={user.username} key={user.username}>{user.username}</option>
                     ))}
             </Form.Select>
         </Form.Group>

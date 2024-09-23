@@ -37,7 +37,7 @@ export default function QuizInput(props: QuizInputProps) {
             <Form.Label>Select Quiz</Form.Label>
                 <Form.Select aria-label="Default select example" onChange={selectQuiz}>
                     {quizzes.map((quiz) => (
-                        <option value={quiz.id}>{quiz.name}</option>
+                        <option key={quiz.id} value={quiz.id}>{quiz.name}</option>
                     ))}
             </Form.Select>
         </Form.Group>

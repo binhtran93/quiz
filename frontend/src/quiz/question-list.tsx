@@ -25,14 +25,15 @@ export default function QuestionList(props: QuestionListProps) {
     return (
 
         <div>
-            <h2>Quiz: ${quiz.name}</h2>
+            <h2 className="mb-4">{quiz.name}</h2>
             {questions.map((question) => {
                 return (
-                    <div>
+                    <div className="mb-4" key={question.id}>
                         <h4>{question.text}</h4>
                         {question.options.map((option) => {
                             return (
                                 <Form.Check
+                                    key={option}
                                     type="radio"
                                     label={option}
                                 />
