@@ -3,6 +3,8 @@ import {TYPES} from "../../app/injection";
 import QuizRepository from "../repositories/quiz-repository";
 import {Quiz} from "../models/quiz";
 
+type NoQuestionsQuiz = Omit<Quiz, 'questions'>
+
 @injectable()
 export default class GetQuizzes {
     constructor(
@@ -10,7 +12,17 @@ export default class GetQuizzes {
         private quizRepository: QuizRepository
     ) {}
 
-    execute(): Promise<Quiz[]> {
-        return this.quizRepository.findAll();
+    async execute(): Promise<NoQuestionsQuiz[]> {
+        const quizzes = await this.quizRepository.findAll();
+
+        const data: {id: string, name: string}[] = [];
+        quizzes.forEach((quiz) => {
+            data.push({
+                id: quiz.id,
+                name: quiz.name,
+            })
+        })
+
+        return Promise.resolve(data);
     }
 }

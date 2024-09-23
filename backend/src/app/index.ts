@@ -12,6 +12,7 @@ import configRoutes from "./router";
 import GetQuizzes from "../quiz/services/get-quizzes";
 import QuizRepository from "../quiz/repositories/quiz-repository";
 import InMemoryQuizRepository from "../quiz/repositories/in-memory-quiz-repository";
+import GetQuestions from "../quiz/services/get-questions";
 
 // Create express app
 const app = express();
@@ -38,6 +39,7 @@ container.bind<UserRepository>(TYPES.UserRepository).to(InMemoryUserRepository);
 container.bind<QuizRepository>(TYPES.QuizRepository).to(InMemoryQuizRepository);
 container.bind(GetUsers).toSelf();
 container.bind(GetQuizzes).toSelf();
+container.bind(GetQuestions).toSelf();
 
 configRoutes(app, container);
 
