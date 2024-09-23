@@ -1,4 +1,6 @@
 import express from 'express';
+import http from 'http';
+import { Server } from 'socket.io';
 const cors = require('cors');
 import {Container} from "inversify";
 import "reflect-metadata";
@@ -11,6 +13,7 @@ import GetQuizzes from "../quiz/services/get-quizzes";
 import QuizRepository from "../quiz/repositories/quiz-repository";
 import InMemoryQuizRepository from "../quiz/repositories/in-memory-quiz-repository";
 
+// Create express app
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -20,6 +23,11 @@ const corsOptions = {
 }
 app.use(cors(corsOptions));
 
+// Create socket io server
+const server = http.createServer(app);
+const io = new Server(server);
+
+// Binding
 const container = new Container();
 container.bind<UserRepository>(TYPES.UserRepository).to(InMemoryUserRepository);
 container.bind<QuizRepository>(TYPES.QuizRepository).to(InMemoryQuizRepository);
@@ -30,4 +38,8 @@ initRoutes(app, container);
 
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
+});
+
+io.on('connection', (socket) => {
+    console.log('a user connected');
 });
