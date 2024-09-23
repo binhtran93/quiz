@@ -1,16 +1,15 @@
 import React, {useEffect, useState} from "react";
-import {Question, Quiz} from "../types";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import {socket} from "../socket";
+import {Question, Quiz, User} from "../types";
+import socket from "../socket";
+import QuestionItem from "./QuestionItem";
 
 type QuestionListProps = {
-    username: string;
+    user: User;
     quiz: Quiz;
 }
 
 export default function QuestionList(props: QuestionListProps) {
-    const {quiz, username} = props;
+    const {quiz, user} = props;
     const [questions, setQuestions] = useState<Question[]>([]);
 
     useEffect(() => {
@@ -28,31 +27,12 @@ export default function QuestionList(props: QuestionListProps) {
         socket.emit('join-quiz', quiz.id);
     }, []);
 
-
     return (
-
         <div>
-            <h2 className="mb-4">{quiz.name} ({username})</h2>
+            <h2 className="mb-4">{quiz.name} ({user.username})</h2>
             {questions.map((question) => {
                 return (
-                    <Form className="mb-4" key={question.id}>
-                        <h4>{question.text}</h4>
-                        {question.options.map((option, index) => {
-                            return (
-                                <Form.Check
-                                    key={option}
-                                    className="mb-1"
-                                    type="radio"
-                                    label={option}
-                                    value={index}
-                                    name="answer"
-                                />
-                            )
-                        })}
-                        <Button className="mt-2" variant="primary" type="button" onClick={() => {}}>
-                            Submit
-                        </Button>
-                    </Form>
+                    <QuestionItem key={question.id} question={question} user={user} quizId={quiz.id} />
                 )
             })}
         </div>

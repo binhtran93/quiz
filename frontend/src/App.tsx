@@ -1,14 +1,14 @@
 import React, {useState} from 'react';
 import {Container} from "react-bootstrap";
 import JoinForm from "./join-quiz/JoinForm";
-import {Quiz} from "./types";
+import {Quiz, User} from "./types";
 import QuizSection from "./quiz/QuizSection";
 
 type State = 'lobby' | 'joined';
 
 function App() {
     const [state, setState] = useState<State>('lobby')
-    const [username, setUsername] = useState<string>('');
+    const [user, setUser] = useState<User>();
     const [quiz, setQuiz] = useState<Quiz>();
 
     const joinQuiz = () => {
@@ -18,11 +18,11 @@ function App() {
     return (
         <Container className="mt-lg-5">
             {state === 'lobby' && (
-                <JoinForm setQuiz={setQuiz} setUsername={setUsername} joinQuiz={joinQuiz} />
+                <JoinForm setQuiz={setQuiz} setUser={setUser} joinQuiz={joinQuiz} />
             )}
 
-            {state === 'joined' && quiz !== undefined && (
-                <QuizSection username={username} quiz={quiz} />
+            {state === 'joined' && quiz !== undefined && user !== undefined && (
+                <QuizSection user={user} quiz={quiz} />
             )}
         </Container>
     );

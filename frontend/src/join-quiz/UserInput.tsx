@@ -3,7 +3,7 @@ import {Form} from "react-bootstrap";
 import {User} from "../types";
 
 type UserInputProp = {
-    onChange: (username: string) => void;
+    onChange: (user: User) => void;
 }
 
 export default function UserInput(props: UserInputProp) {
@@ -17,7 +17,7 @@ export default function UserInput(props: UserInputProp) {
             setUsers(users);
 
             if (users.length > 0) {
-                onChange(users[0].username);
+                onChange(users[0]);
             }
         }
 
@@ -25,7 +25,10 @@ export default function UserInput(props: UserInputProp) {
     }, []);
 
     const selectUser = (e: ChangeEvent<HTMLSelectElement>) => {
-        onChange(e.target.value);
+        const user = users.find((user: User) => user.id === e.target.value);
+        if (user !== undefined) {
+            onChange(user);
+        }
     }
 
     return (
@@ -33,7 +36,7 @@ export default function UserInput(props: UserInputProp) {
             <Form.Label>Select User</Form.Label>
                 <Form.Select aria-label="Default select example" onChange={selectUser}>
                     {users.map((user) => (
-                        <option value={user.username} key={user.username}>{user.username}</option>
+                        <option value={user.id} key={user.username}>{user.username}</option>
                     ))}
             </Form.Select>
         </Form.Group>

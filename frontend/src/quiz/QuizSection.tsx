@@ -1,20 +1,20 @@
 import {Col, Row} from "react-bootstrap";
 import QuestionList from "./QuestionList";
-import {Quiz} from "../types";
+import {Quiz, User} from "../types";
 import Leaderboard from "./Leaderboard";
 
 type QuestionSectionProps = {
-    username: string;
+    user: User;
     quiz: Quiz;
 }
 
 export default function QuizSection(props: QuestionSectionProps) {
-    const {quiz, username} = props;
+    const {quiz, user} = props;
 
     return (
         <Row>
             <Col>
-                <QuestionList username={username} quiz={quiz} />
+                <QuestionList user={user} quiz={quiz} />
             </Col>
 
             <Col>
