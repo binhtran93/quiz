@@ -17,7 +17,7 @@ export default class QuizController {
     }
 
     public async findQuestions(req: Request, res: Response) {
-        const quizId = req.params.id;
+        const quizId = req.params.quizId;
         const questions = await this.getQuestions.execute(quizId);
 
         return res.json(questions);

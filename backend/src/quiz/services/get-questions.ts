@@ -3,6 +3,8 @@ import {TYPES} from "../../app/injection";
 import QuizRepository from "../repositories/quiz-repository";
 import {Question} from "../models/question";
 
+type QuestionOnly = Omit<Question, 'correctAnswerIndex'>;
+
 @injectable()
 export default class GetQuestions {
     constructor(
@@ -10,7 +12,15 @@ export default class GetQuestions {
         private quizRepository: QuizRepository
     ) {}
 
-    execute(quizId: string): Promise<Question[]> {
-        return this.quizRepository.getQuestions(quizId);
+    async execute(quizId: string): Promise<QuestionOnly[]> {
+        const questions = await this.quizRepository.getQuestions(quizId);
+
+        return questions.map((question) => {
+            return {
+                id: question.id,
+                text: question.text,
+                options: question.options,
+            }
+        });
     }
 }
