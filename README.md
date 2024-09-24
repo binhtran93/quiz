@@ -1,7 +1,7 @@
 # System Design
 ## Architecture Diagram
 
-<img src=".docs/images/img.png" alt="Quiz App Logo" width="700x"/>
+<img src=".docs/images/overview.png" alt="Overview" width="700x"/>
 
 ## Component description
 
@@ -36,6 +36,9 @@
 - The WebSocket server processes the answers and then writes the updated score to Redis using the ZINCRBY command
 - Sends request to the Kafka message queue to handle the write operation to the MongoDB cluster.
 - Aggregate leaderboard data and send it to all clients subscribed to the leaderboard of the current quiz. To reduce the frequency of notifications about updates, implement a throttling mechanism with a 500ms delay. This helps manage the load when there are a large number of concurrent users
+
+### Flow chart
+<img src=".docs/images/leaderboard.png" alt="Leaderboard flow chart" width="400x"/>
 
 ## Technology Justification
 **NodeJS & Express.js**: NodeJs is non-blocking I/O and event-driven architecture makes it ideal for handling real-time applications like leaderboard with high concurrent connections

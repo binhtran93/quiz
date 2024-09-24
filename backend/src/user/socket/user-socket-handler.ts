@@ -26,6 +26,8 @@ export default class UserSocketHandler {
     /**
      * We don't want to emit new leaderboard everytime user submit a correct answer, a throttle here is needed to
      * prevent that
+     *
+     * In order for this to work properly, redis cluster should config to read from master only
      */
     const lastModifiedCacheKey = generateLeaderboardLastModifiedCacheKey(quizId)
     const lastModified = await redisClient.get(lastModifiedCacheKey)

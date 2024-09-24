@@ -19,6 +19,10 @@ export default class SubmitAnswer {
       throw new Error('Could not find question')
     }
 
+    /**
+     * Store user answer for question here, I omitted this part for simplicity,
+     */
+
     const isCorrect = question.correctAnswerIndex === answerIndex
     if (isCorrect) {
       /**
@@ -41,9 +45,30 @@ export default class SubmitAnswer {
        * But if eventual consistency is accepted, we can also put this into a queue
        */
       const key = generateLeaderboardCacheKey(quizId)
-      await redisClient.zIncrBy(key, 1, userId)
+
+      // Check if user score is in the current redis sorted set, if not, we must query it MongoDB
+      let increment = 1;
+      let score = await redisClient.zScore(key, userId);
+      if (score === null) {
+        score = this.getScore(quizId, userId);
+        increment = score + 1;
+      }
+
+      await redisClient.zIncrBy(key, increment, userId)
     }
 
     return isCorrect
+  }
+
+  /**
+   * A fake that return score of an user, in a real world, we must query it in the main persistent storage, which is
+   * MongoDB in this case
+   *
+   * @param quizId
+   * @param userId
+   * @private
+   */
+  private getScore(quizId: string, userId: string): number {
+    return 0;
   }
 }

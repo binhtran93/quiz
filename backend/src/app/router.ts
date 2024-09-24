@@ -13,5 +13,5 @@ export default function initRoutes(app: Express, container: Container): void {
   app.get('/api/v1/quizzes/:quizId/questions', quizController.findQuestions.bind(quizController))
 
   const leaderboardController = container.resolve(LeaderboardController)
-  app.get('/api/v1/leaderboard/:quizId/top10', leaderboardController.getTop10.bind(leaderboardController))
+  app.get('/api/v1/leaderboard/:quizId/top10', leaderboardController.getLeaderboard.bind(leaderboardController))
 }
