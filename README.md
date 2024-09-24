@@ -1,3 +1,30 @@
+# Installation
+
+## Install Docker
+https://docs.docker.com/engine/install/ubuntu/
+
+## Install Docker Compose
+https://docs.docker.com/compose/install/other/
+
+#### Install Makefile
+```bash
+sudo apt install make
+```
+
+
+## Running the app
+
+```bash
+$ make startup
+```
+Or if you don't want to use Makefile
+```bash
+$ cd .docker
+$ docker-compose up --build
+```
+
+Checkout: http://localhost:3000/
+
 # System Design
 ## Architecture Diagram
 
