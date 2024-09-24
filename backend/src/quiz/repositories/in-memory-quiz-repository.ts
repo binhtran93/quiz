@@ -2,15 +2,9 @@ import {Quiz} from "../models/quiz";
 import {injectable} from "inversify";
 import QuizRepository from "./quiz-repository";
 import {Question} from "../models/question";
+import {question1, question2, question3, question4, question5, quizId1, quizId2} from "../../fake";
 
-const quizId1 = '5auOzRcxikM2ebToYIPGx';
-const quizId2 = 'aFrF5jNiu8nv2BbdigYZt';
 
-const question1 = 'QTDi2_bniYD7Ugk0Qc2Lh';
-const question2 = 'InBSs3HrRjh-mDzPwQ8LS';
-const question3 = 'lfYL3s-3slK7Y0ilWlPQt';
-const question4 = 'YeaoD4_JqGB9XZhzrbsAz';
-const question5 = '_tOTgZBbB3VRCnpSozRBj';
 
 @injectable()
 export default class InMemoryQuizRepository implements QuizRepository{

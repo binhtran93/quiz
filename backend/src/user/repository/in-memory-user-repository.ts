@@ -1,6 +1,7 @@
 import {User} from "../models/user";
 import {injectable} from "inversify";
 import UserRepository from "./user-repository";
+import {userId1, userId2, username1, username2} from "../../fake";
 
 @injectable()
 export default class InMemoryUserRepository implements UserRepository {
@@ -8,8 +9,8 @@ export default class InMemoryUserRepository implements UserRepository {
 
     constructor() {
         this.users = [
-            {username: 'tdbinh93', id: '123456'},
-            {username: 'binh.tran', id: '654321'},
+            {username: username1, id: userId1},
+            {username: username2, id: userId2},
         ]
     }
 

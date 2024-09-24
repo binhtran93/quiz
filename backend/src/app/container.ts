@@ -9,14 +9,19 @@ import SubmitAnswer from "../quiz/services/submit-answer";
 import InMemoryUserRepository from "../user/repository/in-memory-user-repository";
 import InMemoryQuizRepository from "../quiz/repositories/in-memory-quiz-repository";
 import {TYPES} from "./configs";
+import InMemoryLeaderboardRepository from "../leaderboard/repositories/in-memory-leaderboard-repository";
+import LeaderboardRepository from "../leaderboard/repositories/leaderboard-repository";
+import GetTop10 from "../leaderboard/services/get-top-10";
 
 // Config container
 const container = new Container();
 container.bind<UserRepository>(TYPES.UserRepository).to(InMemoryUserRepository);
 container.bind<QuizRepository>(TYPES.QuizRepository).to(InMemoryQuizRepository);
+container.bind<LeaderboardRepository>(TYPES.LeaderboardRepository).to(InMemoryLeaderboardRepository);
 container.bind(GetUsers).toSelf();
 container.bind(GetQuizzes).toSelf();
 container.bind(GetQuestions).toSelf();
 container.bind(SubmitAnswer).toSelf();
+container.bind(GetTop10).toSelf();
 
 export default container;
