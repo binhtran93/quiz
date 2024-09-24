@@ -1,9 +1,9 @@
-## System Design
-### Architecture Diagram
+# System Design
+## Architecture Diagram
 
 <img src=".docs/images/img.png" alt="Quiz App Logo" width="700x"/>
 
-### Component description
+## Component description
 
 **1. Client (Mobile/Web)**: User Interface (UI) and Interaction Layer
 
@@ -20,7 +20,7 @@
 **7. Kafka message queue & workers**: A message queue that handles writes to MongoDB. It helps manage backpressure by buffering requests, ensuring the system remains responsive under heavy load
 
 
-### Data flow
+## Data flow
 
 **1. User join a quiz**
 - When a user joins a quiz, their request is sent to the **API Server**. The server processes this request, retrieves the necessary quiz data (questions, leaderboard, etc.), and sends it back to the client.
