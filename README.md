@@ -36,3 +36,19 @@
 - The WebSocket server processes the answers and then writes the updated score to Redis using the ZINCRBY command
 - Sends request to the Kafka message queue to handle the write operation to the MongoDB cluster.
 - Aggregate leaderboard data and send it to all clients subscribed to the leaderboard of the current quiz. To reduce the frequency of notifications about updates, implement a throttling mechanism with a 500ms delay. This helps manage the load when there are a large number of concurrent users
+
+## Technology Justification
+**NodeJS & Express.js**:NodeJs is non-blocking I/O and event-driven architecture makes it ideal for handling real-time applications like quizzes with high concurrent connections
+
+**Socket.IO**: Enables real-time communication between client and server. It's reliable due to fallback mechanisms using HTTP long-polling, offers an easy API to manage rooms, and scales well with Redis streams for handling large numbers of users
+
+**Redis Cluster**: 
+- Great for leaderboard management due to its support for sorted sets. Since Redis is single-threaded, commands like ZINCRBY are atomic, which helps prevent race conditions. With proper settings like RDB snapshots, AOF, and an eviction policy like LRU, Redis is both fast and reliable for writing data and ensuring long-term persistence
+- Redis writes are incredibly fast, and using a write-behind caching strategy can significantly improve performance by allowing writes to MongoDB asynchronously. This reduces latency during high load periods while ensuring data is eventually persisted
+- It uses primary and secondary replicas for high availability, and it's easy to scale by adding more nodes to the cluster
+
+**MongoDB cluster**: 
+ - High-speed, low-latency operations and is generally faster for write loads. Beside, we don't need to support complex queries, transactions, and structured data that require ACID compliance
+ - Do support atomic update using `$inc`, which is needed in this usecase
+
+**Kafka for message queue**: Supports exactly-once processing, ensuring that each message is processed reliably without duplication. It is designed for fast throughput, allowing for quick handling of large volumes of data. Additionally, Kafka is easy to scale 
