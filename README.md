@@ -58,3 +58,7 @@
  - Do support atomic update using `$inc`, which is needed in this usecase
 
 **Kafka for message queue**: Supports exactly-once processing, ensuring that each message is processed reliably without duplication. It is designed for fast throughput, allowing for quick handling of large volumes of data. Additionally, Kafka is easy to scale. 
+
+**Kibana**: Kibana provides easy visualization, quick searching and real-time monitoring
+
+**InfluxDB & Grafana**: Offers a powerful solution for time-series data monitoring and visualization
