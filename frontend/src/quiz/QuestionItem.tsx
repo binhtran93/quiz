@@ -13,6 +13,7 @@ type QuestionItemProps = {
 export default function QuestionItem(props: QuestionItemProps) {
     const {user, question, quizId} = props;
     const [answer, setAnswer] = useState<number>(-1);
+    const [submitted, setSubmitted] = useState<boolean>(false);
 
     const submitAnswer = (e: FormEvent<HTMLButtonElement>) => {
         if (answer === -1) {
@@ -20,6 +21,7 @@ export default function QuestionItem(props: QuestionItemProps) {
             return;
         }
 
+        setSubmitted(true);
         socket.emit('submit-answer', {userId: user.id, answerIndex: answer, questionId: question.id, quizId});
     }
 
@@ -38,11 +40,12 @@ export default function QuestionItem(props: QuestionItemProps) {
                         onChange={(e: ChangeEvent<HTMLInputElement>) => {
                             setAnswer(parseInt(e.target.value))
                         }}
+                        disabled={submitted}
                     />
                 )
             })}
 
-            <Button className="mt-2" variant="primary" type="button" onClick={submitAnswer}>
+            <Button className="mt-2" variant="primary" type="button" onClick={submitAnswer} disabled={submitted}>
                 Submit
             </Button>
         </Form>
