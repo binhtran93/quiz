@@ -1,7 +1,7 @@
 import {User} from "../models/user";
 import UserRepository from "../repository/user-repository";
 import {inject, injectable} from "inversify";
-import {TYPES} from "../../app/injection";
+import {TYPES} from "../../app/configs";
 
 @injectable()
 export default class GetUsers {

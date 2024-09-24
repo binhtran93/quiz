@@ -1,5 +1,5 @@
 import {inject, injectable} from "inversify";
-import {TYPES} from "../../app/injection";
+import {TYPES} from "../../app/configs";
 import QuizRepository from "../repositories/quiz-repository";
 import {Question} from "../models/question";
 
