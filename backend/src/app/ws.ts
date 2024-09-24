@@ -3,7 +3,7 @@ import server from "./http";
 import {createAdapter} from "@socket.io/redis-streams-adapter";
 import redisClient from "../redis/client";
 import container from "./container";
-import SubmitAnswer from "../quiz/services/submit-answer";
+import UserSocketHandler from "../user/socket/user-socket-handler";
 
 const origin = 'http://localhost:3000';
 const io = new Server(server, {
@@ -18,14 +18,16 @@ io.on('connection', (socket) => {
         socket.join(quizId);
     });
 
+    socket.on('leave-quiz', (quizId: string) => {
+        socket.leave(quizId);
+    });
+
     socket.on('submit-answer', async (params) => {
         const {userId, answerIndex, questionId, quizId} = params;
 
-        const submitAnswer = container.resolve(SubmitAnswer);
-        const isCorrect = await submitAnswer.execute(userId, quizId, questionId, answerIndex);
-        if (isCorrect) {
-            const leaderboard = await redisClient.zRangeWithScores(`leaderboard-${quizId}`, 0, 10, {REV: true});
-            io.to(quizId).emit('leaderboard-updated', leaderboard);
-        }
+        const userSocketHandler = container.resolve(UserSocketHandler);
+        await userSocketHandler.submitAnswer(userId, quizId, questionId, answerIndex);
     });
 });
+
+export default io;
