@@ -18,38 +18,38 @@ export default class GetLeaderboard {
   ) {}
 
   async execute(quizId: string): Promise<UserScoreWithUsername[]> {
-    let top10 = await this.getTop10FromCache(quizId)
-    if (top10.length === 0) {
-      const top10CacheKey = generateLeaderboardCacheKey(quizId)
-      top10 = await this.leaderboardRepository.get()
+    let leaderboard = await this.getLeaderboardFromCache(quizId)
+    if (leaderboard.length === 0) {
+      const leaderboardCacheKey = generateLeaderboardCacheKey(quizId)
+      leaderboard = await this.leaderboardRepository.get()
 
-      await redisClient.zAdd(top10CacheKey, top10)
+      await redisClient.zAdd(leaderboardCacheKey, leaderboard)
     }
 
     const storeUserInCache: Promise<User | null>[] = []
-    top10.forEach((userScore) => {
+    leaderboard.forEach((userScore) => {
       storeUserInCache.push(this.cacheAndGetUser(userScore.value))
     })
     const users = await Promise.all(storeUserInCache)
 
-    const leaderboard: UserScoreWithUsername[] = []
-    top10.forEach((userScore: UserScore) => {
+    const leaderboardWithUsername: UserScoreWithUsername[] = []
+    leaderboard.forEach((userScore: UserScore) => {
       const user = users.find((u) => u?.id === userScore.value)
       if (!user) {
         return
       }
 
-      leaderboard.push({
+      leaderboardWithUsername.push({
         score: userScore.score,
         username: user.username,
         value: userScore.value
       })
     })
 
-    return leaderboard
+    return leaderboardWithUsername
   }
 
-  private async getTop10FromCache(quizId: string): Promise<UserScore[]> {
+  private async getLeaderboardFromCache(quizId: string): Promise<UserScore[]> {
     const cacheKey = generateLeaderboardCacheKey(quizId)
 
     return redisClient.zRangeWithScores(cacheKey, 0, 10, { REV: true })
