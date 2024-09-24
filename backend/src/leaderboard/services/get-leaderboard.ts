@@ -2,7 +2,7 @@ import redisClient from "../../redis/client";
 import LeaderboardRepository from "../repositories/leaderboard-repository";
 import {inject, injectable} from "inversify";
 import {TYPES} from "../../app/configs";
-import {generateTop10CacheKey} from "../utils";
+import {generateLeaderboardCacheKey} from "../utils";
 import {UserScore, UserScoreWithUsername} from "../models/UserScore";
 import {generateUserCacheKey} from "../../user/utils";
 import {User} from "../../user/models/user";
@@ -21,7 +21,7 @@ export default class GetLeaderboard {
     async execute(quizId: string): Promise<UserScoreWithUsername[]> {
         let top10 = await this.getTop10FromCache(quizId);
         if (top10.length === 0) {
-            const top10CacheKey = generateTop10CacheKey(quizId);
+            const top10CacheKey = generateLeaderboardCacheKey(quizId);
             top10 = await this.leaderboardRepository.get();
 
             await redisClient.zAdd(top10CacheKey, top10);
@@ -51,7 +51,7 @@ export default class GetLeaderboard {
     }
 
     private async getTop10FromCache(quizId: string): Promise<UserScore[]> {
-        const cacheKey = generateTop10CacheKey(quizId);
+        const cacheKey = generateLeaderboardCacheKey(quizId);
 
         return redisClient.zRangeWithScores(cacheKey, 0, 10, {REV: true});
     }
