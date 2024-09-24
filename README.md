@@ -11,7 +11,9 @@
 
 **3. Websocket servers**: Handle real-time communication between clients and the backend. It keeps a constant connection for two-way data transfer, allowing instant updates for quiz answers and leaderboard changes.
 
-**4. API servers**: Handle requests for user data, the question list, and the leaderboard when the user first join the quiz.
+**4. HTTP servers**: Handle requests for user data, the question list, and the leaderboard when the user first join the quiz.
+
+**Noted**: WebSocket (Socket.IO) and HTTP are operating on the same Node.js instance. I illustrated them separately to make the communication between them and other components easier to understand 
 
 **5. Redis cluster**: Stores user and leaderboard data. A cluster is used to improve performance and reliability, allowing for quick access to information and handling larger amounts of data as the app grows
 
