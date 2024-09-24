@@ -2,25 +2,43 @@ import {Table} from "react-bootstrap";
 import socket from "../socket";
 import {useEffect, useState} from "react";
 
-type Rank = {
+type UserScore = {
     value: string;
-    score: number
+    score: number;
+    username: string;
 }
 
-export default function Leaderboard() {
-    const [leaderboard, setLeaderboard] = useState<Rank[]>([]);
+type LeaderboardProps = {
+    quizId: string;
+}
+
+export default function Leaderboard(props: LeaderboardProps) {
+    const {quizId} = props;
+    const [leaderboard, setLeaderboard] = useState<UserScore[]>([]);
     useEffect(() => {
         socket.on('leaderboard-updated', args => {
+            // TODO Check quiz Id
             setLeaderboard(args);
         })
     }, []);
+
+    useEffect(() => {
+        async function fetchLeaderboard() {
+            const res = await fetch(`http://localhost:5000/api/v1/leaderboard/${quizId}/top10`);
+            const leaderboard = await res.json();
+            setLeaderboard(leaderboard);
+        }
+
+        fetchLeaderboard();
+    }, [quizId]);
+
     return (
         <>
             <h2>Leaderboard</h2>
             <Table striped>
                 <thead>
                 <tr>
-                    <th>Rank</th>
+                    <th>Score</th>
                     <th>Username</th>
                 </tr>
                 </thead>
@@ -29,7 +47,7 @@ export default function Leaderboard() {
                     return (
                         <tr>
                             <td>{item.score}</td>
-                            <td>{item.value}</td>
+                            <td>{item.username}</td>
                         </tr>
                     )
                 })}

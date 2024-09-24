@@ -18,7 +18,7 @@ export default function QuizSection(props: QuestionSectionProps) {
             </Col>
 
             <Col>
-                <Leaderboard />
+                <Leaderboard quizId={quiz.id} />
             </Col>
         </Row>
     )

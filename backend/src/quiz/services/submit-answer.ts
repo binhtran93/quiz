@@ -2,6 +2,7 @@ import {inject, injectable} from "inversify";
 import {TYPES} from "../../app/configs";
 import redisClient from '../../redis/client';
 import QuizRepository from "../repositories/quiz-repository";
+import {generateTop10CacheKey} from "../../leaderboard/utils";
 
 @injectable()
 export default class SubmitAnswer {
@@ -33,8 +34,8 @@ export default class SubmitAnswer {
              */
 
             // REDIS
-            const key = `leaderboard-${quizId}`;
-            await redisClient.zIncrBy(key, 1, `user:${userId}`);
+            const key = generateTop10CacheKey(quizId);
+            await redisClient.zIncrBy(key, 1, userId);
         }
 
         return isCorrect

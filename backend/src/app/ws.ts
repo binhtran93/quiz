@@ -4,6 +4,7 @@ import {createAdapter} from "@socket.io/redis-streams-adapter";
 import redisClient from "../redis/client";
 import container from "./container";
 import UserSocketHandler from "../user/socket/user-socket-handler";
+import {SOCKET_EVENTS} from "./configs";
 
 const origin = 'http://localhost:3000';
 const io = new Server(server, {
@@ -14,15 +15,15 @@ const io = new Server(server, {
 });
 
 io.on('connection', (socket) => {
-    socket.on('join-quiz', (quizId: string) => {
+    socket.on(SOCKET_EVENTS.JoinQuiz, (quizId: string) => {
         socket.join(quizId);
     });
 
-    socket.on('leave-quiz', (quizId: string) => {
+    socket.on(SOCKET_EVENTS.LeaveQuiz, (quizId: string) => {
         socket.leave(quizId);
     });
 
-    socket.on('submit-answer', async (params) => {
+    socket.on(SOCKET_EVENTS.SubmitAnswer, async (params) => {
         const {userId, answerIndex, questionId, quizId} = params;
 
         const userSocketHandler = container.resolve(UserSocketHandler);

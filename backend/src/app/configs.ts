@@ -4,4 +4,11 @@ const TYPES = {
     LeaderboardRepository: Symbol.for('LeaderboardRepository'),
 };
 
-export { TYPES };
+const SOCKET_EVENTS = {
+    LeaderboardUpdated: 'leaderboard-updated',
+    JoinQuiz: 'join-quiz',
+    LeaveQuiz: 'leave-quiz',
+    SubmitAnswer: 'submit-answer',
+}
+
+export { TYPES, SOCKET_EVENTS };

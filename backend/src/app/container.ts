@@ -11,7 +11,7 @@ import InMemoryQuizRepository from "../quiz/repositories/in-memory-quiz-reposito
 import {TYPES} from "./configs";
 import InMemoryLeaderboardRepository from "../leaderboard/repositories/in-memory-leaderboard-repository";
 import LeaderboardRepository from "../leaderboard/repositories/leaderboard-repository";
-import GetTop10 from "../leaderboard/services/get-top-10";
+import GetLeaderboard from "../leaderboard/services/get-leaderboard";
 
 // Config container
 const container = new Container();
@@ -22,6 +22,6 @@ container.bind(GetUsers).toSelf();
 container.bind(GetQuizzes).toSelf();
 container.bind(GetQuestions).toSelf();
 container.bind(SubmitAnswer).toSelf();
-container.bind(GetTop10).toSelf();
+container.bind(GetLeaderboard).toSelf();
 
 export default container;
