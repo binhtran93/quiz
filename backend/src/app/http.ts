@@ -1,25 +1,25 @@
-import express from "express";
-import cors from "cors";
-import http from "http";
-import configRoutes from "./router";
-import container from "./container";
+import express from 'express'
+import cors from 'cors'
+import http from 'http'
+import configRoutes from './router'
+import container from './container'
 
-const app = express();
-const port = process.env.PORT || 5000;
-const origin = 'http://localhost:3000';
+const app = express()
+const port = process.env.PORT || 5000
+const origin = 'http://localhost:3000'
 
 const corsOptions = {
-    origin,
-    optionsSuccessStatus: 200,
+  origin,
+  optionsSuccessStatus: 200
 }
-app.use(cors(corsOptions));
+app.use(cors(corsOptions))
 
-const server = http.createServer(app);
+const server = http.createServer(app)
 
-configRoutes(app, container);
+configRoutes(app, container)
 
 server.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
-});
+  console.log(`Server running at http://localhost:${port}`)
+})
 
-export default server;
+export default server

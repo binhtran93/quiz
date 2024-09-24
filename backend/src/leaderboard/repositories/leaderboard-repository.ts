@@ -1,5 +1,5 @@
-import {UserScore} from "../models/UserScore";
+import { UserScore } from '../models/UserScore'
 
 export default interface LeaderboardRepository {
-    get(): Promise<UserScore[]>;
+  get(): Promise<UserScore[]>
 }

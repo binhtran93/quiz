@@ -1,7 +1,7 @@
-import {Quiz} from "../models/quiz";
-import {Question} from "../models/question";
+import { Quiz } from '../models/quiz'
+import { Question } from '../models/question'
 
 export default interface QuizRepository {
-    findAll(): Promise<Quiz[]>;
-    getQuestions(quizId: string): Promise<Question[]>;
+  findAll(): Promise<Quiz[]>
+  getQuestions(quizId: string): Promise<Question[]>
 }
