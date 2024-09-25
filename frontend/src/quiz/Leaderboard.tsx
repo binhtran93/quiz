@@ -17,8 +17,10 @@ export default function Leaderboard(props: LeaderboardProps) {
     const [leaderboard, setLeaderboard] = useState<UserScore[]>([]);
     useEffect(() => {
         socket.on('leaderboard-updated', args => {
-            // TODO Check quiz Id
-            setLeaderboard(args);
+            const {quizId: updatedQuizId, leaderboard} = args;
+            if (quizId === updatedQuizId) {
+                setLeaderboard(leaderboard);
+            }
         })
     }, []);
 

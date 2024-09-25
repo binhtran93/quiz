@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import {Question, Quiz, User} from "../types";
-import socket from "../socket";
 import QuestionItem from "./QuestionItem";
 
 type QuestionListProps = {
@@ -21,10 +20,6 @@ export default function QuestionList(props: QuestionListProps) {
         }
 
         fetchQuestions();
-    }, []);
-
-    useEffect(() => {
-        socket.emit('join-quiz', quiz.id);
     }, []);
 
     return (
