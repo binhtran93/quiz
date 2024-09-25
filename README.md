@@ -25,15 +25,6 @@ $ docker-compose up --build
 
 Checkout: http://localhost:3000/
 
-**Join Quiz Form**
-
-<img src=".docs/images/join-quiz.png" alt="Overview" width="700x"/>
-
-**Quiz**
-
-<img src=".docs/images/questions-and-leaderboard.png" alt="Overview" width="700x"/>
-
-
 # System Design
 ## Architecture Diagram
 
