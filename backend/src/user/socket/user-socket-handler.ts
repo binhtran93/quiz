@@ -1,4 +1,4 @@
-import SubmitAnswer from '../../quiz/services/submit-answer'
+import SubmitAnswer from '../../user/services/submit-answer'
 import { injectable } from 'inversify'
 import io from '../../app/ws'
 import GetLeaderboard from '../../leaderboard/services/get-leaderboard'

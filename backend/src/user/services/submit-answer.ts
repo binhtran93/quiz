@@ -1,7 +1,7 @@
 import { inject, injectable } from 'inversify'
 import { TYPES } from '../../app/configs'
 import redisClient from '../../redis/client'
-import QuizRepository from '../repositories/quiz-repository'
+import QuizRepository from '../../quiz/repositories/quiz-repository'
 import { generateLeaderboardCacheKey } from '../../leaderboard/utils'
 
 @injectable()
