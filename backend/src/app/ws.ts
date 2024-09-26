@@ -24,6 +24,7 @@ io.on('connection', (socket) => {
   })
 
   socket.on(SOCKET_EVENTS.SubmitAnswer, async (params) => {
+    // In a real-world application, we must get userId from sessionId
     const { userId, answerIndex, questionId, quizId } = params
 
     const userSocketHandler = container.resolve(UserSocketHandler)
